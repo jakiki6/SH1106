@@ -268,8 +268,8 @@ void SH1106::display(void) {
     SH1106_command(SH1106_SETHIGHCOLUMN | 0x0); // hi col = 0
     SH1106_command(SH1106_SETSTARTLINE | 0x0);  // line #0
 
-    byte height = 64;
-    byte width = 132;
+    byte height = height();
+    byte width = width();
     byte m_row = 0;
     byte m_col = 2;
 
