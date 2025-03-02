@@ -4,9 +4,17 @@
 #define WHITE 1
 #define INVERSE 2
 
+#ifndef SH1106_I2C_ADDRESS
 #define SH1106_I2C_ADDRESS 0x3C
+#endif
+
+#ifndef SH1106_LCDWIDTH
 #define SH1106_LCDWIDTH 128
+#endif
+
+#ifndef SH1106_LCDHEIGHT
 #define SH1106_LCDHEIGHT 64
+#endif
 
 #define SH1106_SETCONTRAST 0x81
 #define SH1106_DISPLAYALLON_RESUME 0xA4
@@ -58,9 +66,7 @@ class SH1106 : public Adafruit_GFX {
   public:
     SH1106();
 
-    void begin(uint8_t switchvcc, uint8_t i2caddr);
-    void begin(uint8_t switchvcc);
-    void begin();
+    void begin(uint8_t switchvcc = SH1106_SWITCHCAPVCC, uint8_t i2caddr = SH1106_I2C_ADDRESS);
     void SH1106_command(uint8_t c);
     void SH1106_data(uint8_t c);
 

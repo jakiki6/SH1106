@@ -108,9 +108,9 @@ void SH1106::drawPixel(int16_t x, int16_t y, uint16_t color) {
     }
 }
 
-SH1106::SH1106(int8_t reset) : Adafruit_GFX(SH1106_LCDWIDTH, SH1106_LCDHEIGHT) {}
+SH1106::SH1106() : Adafruit_GFX(SH1106_LCDWIDTH, SH1106_LCDHEIGHT) {}
 
-void SH1106::begin(uint8_t vccstate, uint8_t i2caddr, bool reset) {
+void SH1106::begin(uint8_t vccstate, uint8_t i2caddr) {
     _vccstate = vccstate;
     _i2caddr = i2caddr;
 

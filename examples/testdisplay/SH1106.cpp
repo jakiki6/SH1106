@@ -240,14 +240,6 @@ void SH1106::begin(uint8_t vccstate, uint8_t i2caddr) {
     SH1106_command(SH1106_DISPLAYON); //--turn on oled panel
 }
 
-void SH1106::begin(uint8_t vccstate) {
-    begin(vccstate, SH1106_I2C_ADDRESS);
-}
-
-void SH1106::begin() {
-    begin(SH1106_SWITCHCAPVCC);
-}
-
 void SH1106::invertDisplay(uint8_t i) {
     if (i) {
         SH1106_command(SH1106_INVERTDISPLAY);
@@ -271,18 +263,24 @@ void SH1106::SH1106_data(uint8_t c) {
 }
 
 void SH1106::display(void) {
+
     SH1106_command(SH1106_SETLOWCOLUMN | 0x0);  // low col = 0
     SH1106_command(SH1106_SETHIGHCOLUMN | 0x0); // hi col = 0
     SH1106_command(SH1106_SETSTARTLINE | 0x0);  // line #0
 
+    byte _height = height();
+    byte _width = width();
     byte m_row = 0;
-    byte m_col = 0;
+    byte m_col = 2;
+
+    _height >>= 3;
+    _width >>= 3;
 
     int p = 0;
 
     byte i, j, k = 0;
 
-    for (i = 0; i < (height() >> 3); i++) {
+    for (i = 0; i < _height; i++) {
 
         // send a bunch of data in one xmission
         SH1106_command(0xB0 + i + m_row);    // set page address
@@ -292,7 +290,7 @@ void SH1106::display(void) {
         for (j = 0; j < 8; j++) {
             Wire.beginTransmission(_i2caddr);
             Wire.write(0x40);
-            for (k = 0; k < (width() >> 3); k++, p++) {
+            for (k = 0; k < _width; k++, p++) {
                 Wire.write(buffer[p]);
             }
             Wire.endTransmission();
